@@ -1,0 +1,33 @@
+Revision history for Game-Xiangqi
+
+0.05    2026-10-13
+        - Add options, the fields a launcher offers before a game
+        - The keys and the screen are Game::Terminal::Kit's
+        - Requires perl 5.14
+        - FIX: for the second seat, left and right walked the ranks from
+          the bottom of the board up
+        - An empty NO_COLOR leaves colour on; shift-tab steps back
+        - Add to_text and from_text, a game as a string and back by replay
+        - u and r, or undo and redo, take a turn back and play it again
+
+0.04    2026-10-11
+        - Add Game::Xiangqi::Terminal->run(@argv), which returns the exit status
+
+0.03    2026-10-11
+        - A move is now chosen with the arrow keys
+        - FIX: --ansi could only be turned on. --no-ansi now turns it off, so
+          the uncoloured board no longer needs NO_COLOR in the environment.
+        - FIX: --level took a number between the last rung and the smallest
+          budget and read it as a budget: --level 4 meant four nodes. It is
+          refused now, naming both ranges.
+        - FIX: a move the bot offered and the game refused was ignored, and the
+          loop then asked the same bot the same question for ever.
+
+0.02    2026-10-02
+        - FIX: `shift ?` in Terminal.pm parsed as ?PATTERN? before perl 5.22,
+          so the module did not compile and t/19, t/20 and t/21 failed.
+        - FIX: two sort blocks compared the subtest's board, named $b, and
+          not the element; fatal on perl 5.14, a warning after it.
+
+0.01    2026-09-25
+	First version

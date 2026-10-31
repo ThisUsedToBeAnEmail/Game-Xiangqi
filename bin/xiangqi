@@ -1,0 +1,55 @@
+#!/usr/bin/env perl
+use 5.010;
+use strict;
+use warnings;
+
+use Game::Xiangqi::Terminal;
+
+our $VERSION = '0.05';
+
+exit Game::Xiangqi::Terminal->run(@ARGV);
+
+__END__
+=head1 NAME
+
+xiangqi - Chinese chess on a terminal
+
+=head1 SYNOPSIS
+
+    xiangqi                      # play the default bot from the opening
+    xiangqi --level 0 --ascii    # the weakest rung, Latin letters
+    xiangqi --ucci               # speak UCCI instead of drawing anything
+
+=head1 DESCRIPTION
+
+A front end and nothing else: every decision it makes is an option, and the board
+and the protocol both live in L<Game::Xiangqi::Terminal>.
+
+C<--level> takes either a rung index into C<@Game::Xiangqi::Bot::LADDER> or a node
+budget outright, and tells them apart by size: nobody types 8000 when they mean
+"level two". The engine is bounded in B<nodes> and never in seconds.
+
+B<A number between the two is refused rather than guessed at.> The ladder has four
+rungs, so C<--level 4> is one past the end of it and reading it as four nodes is
+not what anybody meant by it; the refusal names both ranges. The ladder also
+B<repeats a rung>, so C<--level 1> and C<--level 2> are the same opponent: see
+L<Game::Xiangqi::Bot>.
+
+C<--pick> chooses a move with the arrow keys and C<--no-pick> types it. Left alone
+it picks when there is a terminal and L<Term::ReadKey> is installed and types when
+there is not, so a game played down a pipe needs no option at all.
+
+C<--seed> takes anything up to thirty-two bytes and B<pads it> to the thirty-two
+the game requires, so C<--seed mine> works rather than being refused.
+
+=head1 EXIT STATUS
+
+    0   you won, or the game drew, or you quit
+    1   you lost
+    2   a bad option
+
+=head1 SEE ALSO
+
+L<Game::Xiangqi>, L<Game::Xiangqi::Terminal>
+
+=cut
